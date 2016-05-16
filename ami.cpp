@@ -15,7 +15,7 @@ AMI::~AMI()
 }
 
 
-void AMI::init()
+void AMI::init(void)
 {
     m_socket = new QTcpSocket(this);
     connect(m_socket, SIGNAL(connected()),
@@ -39,28 +39,36 @@ void AMI::init()
 }
 
 
-void AMI::connected()
+void AMI::hConnected()
 {
     m_socket->write("HEAD / HTTP1.0\r\n\r\n\r\n");
 
 }
 
 
-void AMI::disconnected()
+void AMI::hDisconnected()
 {
     qDebug() << "Disconected\n";
 }
 
 
-void AMI::bytesWritten(quint64 bytes)
+void AMI::hBytesWritten(quint64 bytes)
 {
     qDebug() << bytes << " read ";
 }
 
 
-void AMI::readyRead()
+void AMI::hReadyWrite()
 {
     std::cout << m_socket->readAll().toStdString();
 }
 
+//!
+//! \brief take ami action
+//! \param string or uri taking the action
+//!
+void AMI::action(const QString &act)
+{
+
+}
 
