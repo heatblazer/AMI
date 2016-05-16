@@ -19,16 +19,16 @@ void AMI::init(void)
 {
     m_socket = new QTcpSocket(this);
     connect(m_socket, SIGNAL(connected()),
-            this, SLOT(connected()));
+            this, SLOT(hConnected()));
 
     connect(m_socket, SIGNAL(disconnected()),
-            this, SLOT(disconnected()));
+            this, SLOT(hDisconnected()));
 
     connect(m_socket, SIGNAL(bytesWritten(qint64)),
-            this, SLOT(bytesWritten(quint64)));
+            this, SLOT(hBytesWritten(quint64)));
 
     connect(m_socket, SIGNAL(readyRead()),
-            this, SLOT(readyRead()));
+            this, SLOT(hReadyWrite()));
 
     m_socket->connectToHost("google.com", 80);
 
