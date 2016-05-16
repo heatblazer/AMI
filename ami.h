@@ -10,8 +10,12 @@ class AMI : public QObject
 public:
     explicit AMI(QObject* parent = nullptr);
     virtual ~AMI();
-    void init();
+    void init(void);
     void action(const QString& act);
+
+private:
+
+    void route(void);
 
     // I`ll emit these so the client will know I am ready
 signals:
@@ -19,10 +23,10 @@ signals:
     void actionNotReady();
 
 public slots:
-    void connected();
-    void disconnected();
-    void bytesWritten(quint64 bytes);
-    void readyRead();
+    void hConnected();
+    void hDisconnected();
+    void hBytesWritten(quint64 bytes);
+    void hReadyWrite();
 private slots:
 private:
     QTcpSocket* m_socket;
