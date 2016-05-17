@@ -1,15 +1,18 @@
-#include <QCoreApplication>
+#include <QApplication>
+#include <QWidget>
 #include <QTcpSocket>
 #include "ami.h"
-
+#include "ptt.h"
 
 
 int main(int argc, char *argv[])
 {
-    QCoreApplication a(argc, argv);
+    QApplication a(argc, argv);
 
-    AMI* ami = new AMI();
-    ami->init();
+    AMI ami;
+    ami.init();
+
+    ptt p(&ami);
 
     return a.exec();
 }
