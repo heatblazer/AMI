@@ -7,35 +7,36 @@ AmiMsg::~AmiMsg()
 }
 
 
-AmiMsg::AmiMsg()
+AmiMsg::AmiMsg() : m_next(0)
 {
+    for(int i=0; i < MAX; i++){
+        memset(m_msgForAmi[i], 0, 128);
 
+    }
+    m_next = 0;
 }
 
 
 AmiMsg& AmiMsg::addAction(const QString &act)
 {
-    m_msgForAmi.append("Action:");
-    m_msgForAmi.append(act);
-    m_msgForAmi.append("\n");
+    sprintf(m_msgForAmi[m_next], "Action:%s\n", act.toLocal8Bit().constData());
+    m_next++;
     return *this;
 }
 
 
 AmiMsg& AmiMsg::addEvent(const QString &ev)
 {
-    m_msgForAmi.append("Event:");
-    m_msgForAmi.append(ev);
-    m_msgForAmi.append("\n");
+    sprintf(m_msgForAmi[m_next], "Event:%s\n", ev.toLocal8Bit().constData());
+    m_next++;
     return *this;
 }
 
 
 AmiMsg& AmiMsg::addResponse(const QString &resp)
 {
-    m_msgForAmi.append("Response:");
-    m_msgForAmi.append(resp);
-    m_msgForAmi.append("\n");
+    sprintf(m_msgForAmi[m_next], "Response:%s\n", resp.toLocal8Bit().constData());
+    m_next++;
     return *this;
 }
 
@@ -47,13 +48,22 @@ AmiMsg& AmiMsg::addResponse(const QString &resp)
 //!
 AmiMsg &AmiMsg::addMore(const QString &app)
 {
-    m_msgForAmi.append(app);
+    sprintf(m_msgForAmi[m_next], "%s", app.toLocal8Bit().constData());
+    m_next++;
+
     return *this;
 }
 
 
-QString AmiMsg::submit()
+QByteArray AmiMsg::submit()
 {
-    m_msgForAmi.append("\n"); // terminal symbol //
-    return m_msgForAmi;
+    QString s;
+    for(int i=0; i < m_next; i++) {
+        s.append(m_msgForAmi[i]);
+        memset(m_msgForAmi[i], 0, 128);
+    }
+    s.append("\n");
+    m_next=0;
+    return s.toLocal8Bit();
+
 }

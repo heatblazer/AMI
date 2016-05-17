@@ -33,6 +33,8 @@ ptt::~ptt()
 void ptt::hClick()
 {
     // handle the click send the message //
+    AmiAction *act = new AmiAction;
+    doAction(act);
 
 }
 

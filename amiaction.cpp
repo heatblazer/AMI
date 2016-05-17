@@ -12,9 +12,9 @@ AmiAction::~AmiAction()
 
 }
 
-QString AmiAction::getMsg()
+QByteArray AmiAction::getMsg()
 {
-    QString s = m_msg->addAction("login").addMore("username:joro\n")
+    QByteArray s = m_msg->addAction("login").addMore("username:joro\n")
             .addMore("secret:sopa123\n").submit();
     return s;
 

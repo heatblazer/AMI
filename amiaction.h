@@ -10,7 +10,7 @@ public:
     explicit AmiAction(); // maybe construct the AmiMsg //
     virtual ~AmiAction(); // maybe destroy it //
 
-    QString getMsg();
+    QByteArray getMsg();
 private:
     AmiMsg* m_msg;
 
