@@ -28,7 +28,8 @@ private:
     // on call, call my function //
     QString     m_msgForAmi;
 
-    AmiClient* m_callee; // who called me? //
+    // who called me? //
+    AmiClient* m_callee;
 
 
 

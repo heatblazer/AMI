@@ -40,6 +40,7 @@ void ptt::hClick()
 
 void ptt::doAction(AmiAction *action)
 {
+
     // ami action will take an action using his msg ptr //
     m_ami->action(action->getMsg());
 }
