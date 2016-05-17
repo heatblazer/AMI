@@ -21,17 +21,15 @@ public:
     AmiMsg& addEvent(const QString& ev);
     AmiMsg& addAction(const QString& act);
     AmiMsg& addResponse(const QString& resp);
+    AmiMsg &addMore(const QString& app);
 
-    QString build(void);
+    QString submit(void);
 
 private:
     // on call, call my function //
     QString     m_msgForAmi;
-
     // who called me? //
     AmiClient* m_callee;
-
-
 
 };
 

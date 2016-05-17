@@ -34,7 +34,6 @@ void ptt::hClick()
 {
     // handle the click send the message //
 
-
 }
 
 

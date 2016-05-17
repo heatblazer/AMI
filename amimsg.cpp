@@ -52,7 +52,7 @@ AmiMsg &AmiMsg::addMore(const QString &app)
 }
 
 
-QString AmiMsg::build()
+QString AmiMsg::submit()
 {
     m_msgForAmi.append("\n"); // terminal symbol //
     return m_msgForAmi;
