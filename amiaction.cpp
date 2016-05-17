@@ -14,14 +14,28 @@ AmiAction::~AmiAction()
 
 QByteArray AmiAction::getMsg()
 {
-    QByteArray s = m_msg->addAction("login").addMore("username:joro\n")
+    QByteArray s = m_msg.addAction("login").addMore("username:joro\n")
             .addMore("secret:sopa123\n").submit();
-    QByteArray s1 = m_msg->addEvent("error").addMore("dasdsadas")
-            .addMore("231232132132").addMore("43reddsfdsf").submit();
-    QByteArray s2 = m_msg->addResponse("hui")
-            .addMore("1212121").addMore("434343432432")
-            .addMore("dsadsadsadsadsad").addMore("dsadsadsa")
-            .addEvent("!!!!!").submit();
+    QByteArray s10 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s9 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s8 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s7 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s6 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s5 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s4 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s3 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s2 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
+    QByteArray s1 = m_msg.addAction("login").addMore("username:joro\n")
+            .addMore("secret:sopa123\n").submit();
 
 
     return s;

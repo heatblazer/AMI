@@ -1,7 +1,11 @@
 #include "amimsg.h"
 
 
-int AmiMsg::m_next = 0;
+AmiMsg::AmiMsg()
+{
+
+}
+
 
 AmiMsg::~AmiMsg()
 {
@@ -9,36 +13,32 @@ AmiMsg::~AmiMsg()
 }
 
 
-AmiMsg::AmiMsg()
+
+AmiMsg& AmiMsg::addAction(const QString& act)
 {
-    for(int i=0; i < ArrSize::MAX; i++){
-        memset(m_msgForAmi[i], 0, 128);
+    char s[128]={0};
+    sprintf(s, "Action:%s\n", act.toLocal8Bit().constData());
+    m_command.append(s);
 
-    }
-    m_next = 0;
-}
-
-
-AmiMsg& AmiMsg::addAction(const char* act)
-{
-    sprintf(m_msgForAmi[m_next], "Action:%s\n", act);
-    m_next++;
     return *this;
 }
 
 
-AmiMsg& AmiMsg::addEvent(const char* ev)
+AmiMsg& AmiMsg::addEvent(const QString &ev)
 {
-    sprintf(m_msgForAmi[m_next], "Event:%s\n", ev);
-    m_next++;
+    char s[128];
+    sprintf(s, "Event:%s\n", ev.toLocal8Bit().constData());
+    m_command.append(s);
     return *this;
 }
 
 
-AmiMsg& AmiMsg::addResponse(const char* resp)
+AmiMsg& AmiMsg::addResponse(const QString& resp)
 {
-    sprintf(m_msgForAmi[m_next], "Response:%s\n", resp);
-    m_next++;
+    char s[128]={0};
+    sprintf(s, "Response:%s\n", resp.toLocal8Bit().constData());
+    m_command.append(s);
+
     return *this;
 }
 
@@ -48,10 +48,11 @@ AmiMsg& AmiMsg::addResponse(const char* resp)
 //! \param append more text. You are responsible for the NEWLINE!!!
 //! \return AmiMsg for building
 //!
-AmiMsg &AmiMsg::addMore(const char* app)
+AmiMsg &AmiMsg::addMore(const QString& app)
 {
-    sprintf(m_msgForAmi[m_next], "%s", app);
-    m_next++;
+    char s[128]={0};
+    sprintf(s, "%s", app.toLocal8Bit().constData());
+    m_command.append(s);
 
     return *this;
 }
@@ -59,13 +60,9 @@ AmiMsg &AmiMsg::addMore(const char* app)
 
 QByteArray AmiMsg::submit()
 {
-    QString s;
-    for(int i=0; i < m_next; i++) {
-        s.append(m_msgForAmi[i]);
-        memset(m_msgForAmi[i], 0, 128);
-    }
-    s.append("\n");
-    m_next=0;
-    return s.toLocal8Bit();
-
+    m_command.append("\n");
+    QByteArray ba = m_command.toLocal8Bit();
+    m_command.clear();
+    return ba;
 }
+

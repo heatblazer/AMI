@@ -1,6 +1,7 @@
 #ifndef AMIACTION_H
 #define AMIACTION_H
 #include <QByteArray>
+#include "amimsg.h"
 
 class AmiMsg;
 
@@ -12,7 +13,7 @@ public:
 
     QByteArray getMsg();
 private:
-    AmiMsg* m_msg;
+    AmiMsg m_msg;
 
 };
 
