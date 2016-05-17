@@ -1,15 +1,17 @@
 #include "amimsg.h"
 
 
+int AmiMsg::m_next = 0;
+
 AmiMsg::~AmiMsg()
 {
 
 }
 
 
-AmiMsg::AmiMsg() : m_next(0)
+AmiMsg::AmiMsg()
 {
-    for(int i=0; i < MAX; i++){
+    for(int i=0; i < ArrSize::MAX; i++){
         memset(m_msgForAmi[i], 0, 128);
 
     }
@@ -17,25 +19,25 @@ AmiMsg::AmiMsg() : m_next(0)
 }
 
 
-AmiMsg& AmiMsg::addAction(const QString &act)
+AmiMsg& AmiMsg::addAction(const char* act)
 {
-    sprintf(m_msgForAmi[m_next], "Action:%s\n", act.toLocal8Bit().constData());
+    sprintf(m_msgForAmi[m_next], "Action:%s\n", act);
     m_next++;
     return *this;
 }
 
 
-AmiMsg& AmiMsg::addEvent(const QString &ev)
+AmiMsg& AmiMsg::addEvent(const char* ev)
 {
-    sprintf(m_msgForAmi[m_next], "Event:%s\n", ev.toLocal8Bit().constData());
+    sprintf(m_msgForAmi[m_next], "Event:%s\n", ev);
     m_next++;
     return *this;
 }
 
 
-AmiMsg& AmiMsg::addResponse(const QString &resp)
+AmiMsg& AmiMsg::addResponse(const char* resp)
 {
-    sprintf(m_msgForAmi[m_next], "Response:%s\n", resp.toLocal8Bit().constData());
+    sprintf(m_msgForAmi[m_next], "Response:%s\n", resp);
     m_next++;
     return *this;
 }
@@ -46,9 +48,9 @@ AmiMsg& AmiMsg::addResponse(const QString &resp)
 //! \param append more text. You are responsible for the NEWLINE!!!
 //! \return AmiMsg for building
 //!
-AmiMsg &AmiMsg::addMore(const QString &app)
+AmiMsg &AmiMsg::addMore(const char* app)
 {
-    sprintf(m_msgForAmi[m_next], "%s", app.toLocal8Bit().constData());
+    sprintf(m_msgForAmi[m_next], "%s", app);
     m_next++;
 
     return *this;
