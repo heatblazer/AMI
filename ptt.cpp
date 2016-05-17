@@ -14,7 +14,7 @@ ptt::ptt(QObject *parent) : QObject(parent)
 
 }
 
-void ptt::registerAmi(AMI* pami)
+void ptt::registerAmi(const AMI* pami)
 {
     m_ami = pami;
 }
@@ -29,10 +29,11 @@ void ptt::hClick()
 {
     // handle the click send the message //
 
+
 }
 
 
 void ptt::doAction(AmiAction *aciton)
 {
-
+    // ami action will take an action using his msg ptr //
 }

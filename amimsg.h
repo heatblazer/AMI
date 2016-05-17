@@ -10,10 +10,9 @@ public:
     explicit AmiMsg();
     virtual ~AmiMsg();
 
-
 private:
-    // on call, call my function
-    AmiClient* m_callee; // who called me?
+    // on call, call my function //
+    AmiClient* m_callee; // who called me? //
 
 };
 

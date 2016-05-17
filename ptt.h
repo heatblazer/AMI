@@ -13,11 +13,11 @@ class ptt : public QObject, public AmiInterface
     Q_OBJECT
 public:
     explicit ptt(QObject* parent = nullptr);
-    void registerAmi(AMI* pami);
-
     virtual ~ptt();
 
-    virtual doAction(AmiAction *aciton);
+    virtual void doAction(AmiAction *aciton);
+    void registerAmi(const AMI* pami);    //for now register an outside ami //
+
 
 signals:
 
@@ -25,7 +25,7 @@ private slots:
     void hClick(void);
 
 private:
-    AMI* m_ami; // reference to the AMI , I`ll talk with this //
+    const AMI* m_ami; // reference to the AMI , I`ll talk with this //
     QPushButton* m_button; // pedal simulation //
 };
 

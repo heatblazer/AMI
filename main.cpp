@@ -11,8 +11,8 @@ int main(int argc, char *argv[])
 
     AMI ami;
     ami.init();
-
     ptt p(&ami);
 
+    Q_UNUSED(p);
     return a.exec();
 }

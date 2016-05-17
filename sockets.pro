@@ -14,10 +14,12 @@ TEMPLATE = app
 SOURCES += main.cpp \
     ami.cpp \
     ptt.cpp \
-    amiinterface.cpp
+    amiinterface.cpp \
+    amimsg.cpp
 
 HEADERS += \
     ami.h \
     ptt.h \
     amimsg.h \
-    amiinterface.h
+    amiinterface.h \
+    amiaction.h
