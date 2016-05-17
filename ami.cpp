@@ -110,7 +110,6 @@ void AMI::hReadyWrite()
 //!
 void AMI::action(const QString &act)
 {
-
     m_socket->write(act.toLocal8Bit());
 }
 

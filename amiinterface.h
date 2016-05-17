@@ -1,7 +1,6 @@
 #ifndef AMIINTERFACE_H
 #define AMIINTERFACE_H
-
-class AmiAction;
+#include "amiaction.h"
 
 // I want you to implement it forcibly and never instante it //
 class AmiInterface

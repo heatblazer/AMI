@@ -15,7 +15,8 @@ SOURCES += main.cpp \
     ami.cpp \
     ptt.cpp \
     amiinterface.cpp \
-    amimsg.cpp
+    amimsg.cpp \
+    amiaction.cpp
 
 HEADERS += \
     ami.h \

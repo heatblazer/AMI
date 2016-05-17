@@ -1,5 +1,6 @@
 #ifndef AMIACTION_H
 #define AMIACTION_H
+#include <QByteArray>
 
 class AmiMsg;
 
@@ -9,6 +10,7 @@ public:
     explicit AmiAction(); // maybe construct the AmiMsg //
     virtual ~AmiAction(); // maybe destroy it //
 
+    QString getMsg();
 private:
     AmiMsg* m_msg;
 
