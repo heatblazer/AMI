@@ -5,6 +5,7 @@
 #include "ami.h"
 #include "amiinterface.h"
 #include "amimsg.h"
+#include "amiaction.h"
 
 class AmiAction;
 
@@ -25,7 +26,8 @@ private slots:
     void hClick(void);
 
 private:
-    AMI* m_ami; // reference to the AMI , I`ll talk with this //
+    AmiAction m_act;
+    AMI m_ami; // reference to the AMI , I`ll talk with this //
     QPushButton* m_button; // pedal simulation //
 };
 

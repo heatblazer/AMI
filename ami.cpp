@@ -40,8 +40,8 @@ void AMI::init(void)
 
     connect(this, SIGNAL(amiDisconnected()),
             this, SLOT(hDisconnected())); // handle with the same slot for now
-    connect(this, SIGNAL(loginSuccess()),
-            this, SLOT(testAction()));
+   // connect(this, SIGNAL(loginSuccess()),
+   //         this, SLOT(testAction()));
 
     // connect to the routing function also
     connect(this, SIGNAL(amiConnected()),
@@ -86,7 +86,7 @@ void AMI::hDisconnected()
 
 void AMI::hBytesWritten(qint64 bytes)
 {
-    std::cout  << bytes;
+    std::cout  << "Bytes written: " << bytes;
 }
 
 
@@ -97,10 +97,6 @@ void AMI::hReadyWrite()
         m_socket->waitForReadyRead(3000);
     }
     s = QString(m_socket->readLine().simplified());
-
-    if (s.contains("Success")) {
-
-    }
     std::cout << s.toStdString() << std::endl;
 }
 

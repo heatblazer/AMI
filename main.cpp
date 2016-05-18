@@ -9,10 +9,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    AMI ami;
-    ami.init();
-    ptt p(&ami);
+    ptt p;
 
-    Q_UNUSED(p);
     return a.exec();
 }
