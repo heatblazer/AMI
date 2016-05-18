@@ -14,9 +14,15 @@ AmiAction::~AmiAction()
 
 QByteArray AmiAction::getMsg()
 {
-//    QByteArray s = m_msg.addAction("login").addMore("username:joro\n")
-//            .addMore("secret:sopa123\n").submit();
-    QByteArray s = m_msg.addAction("Ping").submit();
+    // a bit UGLY but it`s a workspace test platform
+    static int i=0;
+    char id[12]={0};
+    sprintf(id, "%d", i);
+    i += 1;
+
+    QByteArray s = m_msg.addAction("Ping")
+            .addMore(QString("actionid:%1").arg(id)).addMore("\n")
+            .submit();
     return s;
 
 }

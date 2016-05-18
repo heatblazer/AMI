@@ -2,8 +2,17 @@
 #include <iostream>
 #include <QDebug>
 
+
+ptt*    ptt::m_self =  nullptr;
+
 ptt::ptt(QObject *parent) : QObject(parent)
 {
+    static int pttid=0;
+    static char pttname[8]={0};
+    // NOT MISRA !!!
+    sprintf(pttname, "PTT%d", ++pttid);
+
+
     m_button = new QPushButton;
 
     // keep in mind there are 2 signlas to handle choose which one //
@@ -11,11 +20,17 @@ ptt::ptt(QObject *parent) : QObject(parent)
             this, SLOT(hClick()));
     connect(m_button, SIGNAL(pressed()),
             this, SLOT(hPress()));
+    connect(m_button, SIGNAL(released()),
+            this, SLOT(hReleased()));
 
-    m_button->setText("PTT");
+
+    m_button->setText(pttname);
     m_button->setMinimumHeight(200);
     m_button->setMinimumWidth(200);
     m_button->show();
+
+    m_self = this;
+
 
 }
 
@@ -47,9 +62,17 @@ ptt::phandle::phandle(QPushButton *bhndl)
 
 void ptt::phandle::run()
 {
-    while (pBtn->isDown()) {
-        std::cout << "HANDLE BUTTON DOWN" << std::endl;
+
+    while (ptt::m_self->m_button->isDown()) {
+       // std::cout << "HANDLE BUTTON DOWN" << std::endl;
+       // ptt::m_self->doAction(&ptt::m_self->m_act);
     }
+}
+
+
+void ptt::hReleased()
+{
+
 }
 
 void ptt::hPress()

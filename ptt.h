@@ -11,6 +11,7 @@
 
 
 class AmiAction;
+class ptt;
 
 class ptt : public QObject, public AmiInterface
 {
@@ -28,6 +29,7 @@ signals:
 private slots:
     void hClick(void);
     void hPress(void);
+    void hReleased(void);
 private:
 
     class phandle : public QThread
@@ -37,13 +39,16 @@ private:
     private:
         void run();
         QPushButton* pBtn;
+        friend class ptt;
     };
 
 private:
+    static ptt*        m_self;
     AmiAction m_act;
     AMI* m_ami; // reference to the AMI , I`ll talk with this //
     QPushButton* m_button; // pedal simulation //
 
+    friend class phandle;
 
 };
 

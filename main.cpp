@@ -15,10 +15,12 @@ int main(int argc, char *argv[])
     ami.init();
 
     // create a test ptt device //
-    ptt p;
+    ptt p1;
+    ptt p2;
 
     // get a handle to the ami //
-    p.registerAmi(&ami);
+    p1.registerAmi(&ami);
+    p2.registerAmi(&ami);
 
     return a.exec();
 }
