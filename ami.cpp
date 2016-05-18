@@ -3,8 +3,6 @@
 #include <iostream>
 
 
-
-
 AMI::AMI(QObject *parent) :
     QObject(parent)
 {
@@ -44,17 +42,16 @@ void AMI::init(void)
    //         this, SLOT(testAction()));
 
     // connect to the routing function also
-    connect(this, SIGNAL(amiConnected()),
+    connect(this, SIGNAL(amiStateChanged(AmiState)),
             this, SLOT(route()));
-    connect(this, SIGNAL(amiDisconnected()),
+    connect(this, SIGNAL(amiStateChanged(AmiState)),
             this, SLOT(route()));
-    connect(this, SIGNAL(actionReady()),
+    connect(this, SIGNAL(amiStateChanged(AmiState)),
             this, SLOT(route()));
-    connect(this, SIGNAL(actionNotReady()),
+    connect(this, SIGNAL(amiStateChanged(AmiState)),
             this, SLOT(route()));
 
     m_socket->connectToHost("192.168.32.89", 5038);
-
 
 
 }
@@ -74,22 +71,25 @@ void AMI::tryLogin()
 void AMI::hConnected()
 {
     m_state = AmiState::AMI_CONNECTED;
-    emit amiConnected();
+    emit amiStateChanged(m_state);
 }
 
 
 void AMI::hDisconnected()
 {
     m_state = AmiState::AMI_DISCONNECTED;
+    emit amiStateChanged(m_state);
 }
 
 
 void AMI::hBytesWritten(qint64 bytes)
 {
     std::cout  << "Bytes written: " << bytes;
+    m_state = AmiState::AMI_READY;
+    emit amiStateChanged(m_state);
 }
 
-
+// maybe emit or change state
 void AMI::hReadyWrite()
 {
     QString s;
@@ -97,10 +97,11 @@ void AMI::hReadyWrite()
         // read all
         s = QString(m_socket->readAll().simplified());
         printf("%s\n", s.toLocal8Bit().constData());
+
     } else {
+        // wait for ready 3000 it will freeze the appp
         m_socket->waitForReadyRead(3000);
     }
-
 }
 
 //!
@@ -121,10 +122,12 @@ void AMI::route(void)
     case AmiState::AMI_CONNECTED:
         std::cout << "AMI CONNECTED\n";
         // try login
+        tryLogin();
         break;
     case AmiState::AMI_DISCONNECTED:
         std::cout << "AMI DISCONNECTED\n";
-        // try to connect again
+        // try to connect again //
+        m_socket->connectToHost("192.168.32.89", 5038);
         break;
     case AmiState::AMI_CONNECTION_LOST:
         std::cout << "AMI CONNECTION LOST\n";
@@ -156,3 +159,5 @@ void AMI::login(const QString& uname, const QString& pass)
         emit loginSuccess();
     }
 }
+
+

@@ -23,7 +23,6 @@ ptt::ptt(QObject *parent) : QObject(parent)
     connect(m_button, SIGNAL(released()),
             this, SLOT(hReleased()));
 
-
     m_button->setText(pttname);
     m_button->setMinimumHeight(200);
     m_button->setMinimumWidth(200);

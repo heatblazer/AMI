@@ -39,6 +39,8 @@ signals:
     void actionReady();
     void actionNotReady();
 
+    void amiStateChanged(AmiState state);
+
 public slots:
     void hConnected();
     void hDisconnected();
