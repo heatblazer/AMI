@@ -33,23 +33,18 @@ void AMI::init(void)
             this, SLOT(hReadyWrite()));
 
     // ami internals
-    connect(this, SIGNAL(amiConnected()),
-            this, SLOT(tryLogin()));
+    //connect(this, SIGNAL(amiConnected()),
+    //        this, SLOT(tryLogin()));
 
-    connect(this, SIGNAL(amiDisconnected()),
-            this, SLOT(hDisconnected())); // handle with the same slot for now
+    //connect(this, SIGNAL(amiDisconnected()),
+    //        this, SLOT(hDisconnected())); // handle with the same slot for now
    // connect(this, SIGNAL(loginSuccess()),
    //         this, SLOT(testAction()));
 
     // connect to the routing function also
     connect(this, SIGNAL(amiStateChanged(AmiState)),
             this, SLOT(route()));
-    connect(this, SIGNAL(amiStateChanged(AmiState)),
-            this, SLOT(route()));
-    connect(this, SIGNAL(amiStateChanged(AmiState)),
-            this, SLOT(route()));
-    connect(this, SIGNAL(amiStateChanged(AmiState)),
-            this, SLOT(route()));
+
 
     m_socket->connectToHost("192.168.32.89", 5038);
 
@@ -110,7 +105,14 @@ void AMI::hReadyWrite()
 //!
 void AMI::action(const QString &act)
 {
-    m_socket->write(act.toLocal8Bit());
+    qint64 bytes = m_socket->write(act.toLocal8Bit());
+    if(bytes <= 0) {
+        m_state = AmiState::AMI_NOT_READY;
+        emit amiStateChanged(m_state);
+    } else {
+        m_state = AmiState::AMI_READY;
+        emit amiStateChanged(m_state);
+    }
 }
 
 
@@ -137,6 +139,9 @@ void AMI::route(void)
         std::cout << "AMI READY\n";
         // ready to send actions
         break;
+    case AmiState::AMI_NOT_READY:
+        std::cout << "AMI NOT READY\n";
+        break;
     case AmiState::UNKNOWN:
     default:
         std::cout << "AMI UNKNOWN STATE";
@@ -153,10 +158,12 @@ void AMI::login(const QString& uname, const QString& pass)
 
     qint64 res = m_socket->write(login_str.toLocal8Bit());
 
-    if (res < 0) {
-        emit loginError();
+    if (res <= 0) {
+        m_state = AmiState::AMI_LOGIN_ERR;
+        emit amiStateChanged(m_state);
     } else {
-        emit loginSuccess();
+        m_state = AmiState::AMI_LOGIN_OK;
+        emit amiStateChanged(m_state);
     }
 }
 

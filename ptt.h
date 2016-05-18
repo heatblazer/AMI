@@ -8,8 +8,6 @@
 #include "amimsg.h"
 #include "amiaction.h"
 
-
-
 class AmiAction;
 class ptt;
 
@@ -43,11 +41,13 @@ private:
     };
 
 private:
-    static ptt*        m_self;
-    AmiAction m_act;
-    AMI* m_ami; // reference to the AMI , I`ll talk with this //
-    QPushButton* m_button; // pedal simulation //
 
+    AMI* m_ami; // reference to the AMI , I`ll talk with this //
+    AmiAction m_act;
+
+    /* test specific never met in RADIS2 */
+    static ptt*        m_self;
+    QPushButton* m_button; // pedal simulation //
     friend class phandle;
 
 };

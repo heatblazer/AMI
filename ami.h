@@ -12,6 +12,7 @@ class AMI : public QObject
         AMI_DISCONNECTED,
         AMI_CONNECTION_LOST,
         AMI_READY,
+        AMI_NOT_READY,
         AMI_LOGIN_OK,
         AMI_LOGIN_ERR,
         UNKNOWN
