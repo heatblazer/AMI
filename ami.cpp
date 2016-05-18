@@ -93,11 +93,14 @@ void AMI::hBytesWritten(qint64 bytes)
 void AMI::hReadyWrite()
 {
     QString s;
-    if (!m_socket->canReadLine()) {
+    if (m_socket->canReadLine()) {
+        // read all
+        s = QString(m_socket->readAll().simplified());
+        printf("%s\n", s.toLocal8Bit().constData());
+    } else {
         m_socket->waitForReadyRead(3000);
     }
-    s = QString(m_socket->readLine().simplified());
-    std::cout << s.toStdString() << std::endl;
+
 }
 
 //!
