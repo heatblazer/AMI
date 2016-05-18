@@ -27,7 +27,7 @@ private slots:
 
 private:
     AmiAction m_act;
-    AMI m_ami; // reference to the AMI , I`ll talk with this //
+    AMI* m_ami; // reference to the AMI , I`ll talk with this //
     QPushButton* m_button; // pedal simulation //
 };
 
