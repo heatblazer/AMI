@@ -15,7 +15,12 @@ int main(int argc, char *argv[])
     AMI ami;
 
     // initialize it //
-    ami.init();
+    int res = 0;
+    ami.init(&res);
+
+    if (res == 0) {
+        exit(1);
+    }
 
 
     // create a test ptt device //
@@ -29,6 +34,11 @@ int main(int argc, char *argv[])
     p2.registerAmi(&ami);
     p3.registerAmi(&ami);
     p4.registerAmi(&ami);
+
+
+    QWidget mw;
+    mw.setLayout((QHBoxLayout*)&ptt::hlayout);
+    mw.show();
 
 
     return a.exec();

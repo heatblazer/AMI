@@ -5,6 +5,10 @@
 
 ptt*    ptt::m_self =  nullptr;
 
+QHBoxLayout ptt::hlayout;
+
+
+
 ptt::ptt(QObject *parent) : QObject(parent)
 {
     static int pttid=0;
@@ -26,9 +30,10 @@ ptt::ptt(QObject *parent) : QObject(parent)
     m_button->setText(pttname);
     m_button->setMinimumHeight(200);
     m_button->setMinimumWidth(200);
-    m_button->show();
 
     m_self = this;
+    m_act = new AmiAction(this);
+    hlayout.addWidget(m_button);
 
 
 }
@@ -49,7 +54,7 @@ ptt::~ptt()
 void ptt::hClick()
 {
     // handle the click send the message //
-    doAction(&m_act);
+    doAction(m_act);
 
 }
 

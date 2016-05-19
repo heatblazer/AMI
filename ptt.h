@@ -1,8 +1,11 @@
 #ifndef PTT_H
 #define PTT_H
 #include <QThread>
+#include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QPushButton>
 #include <QObject>
+
 #include "ami.h"
 #include "amiinterface.h"
 #include "amimsg.h"
@@ -11,6 +14,7 @@
 class AmiAction;
 class ptt;
 
+// implplementing the AmiInterface //
 class ptt : public QObject, public AmiInterface
 {
     Q_OBJECT
@@ -40,10 +44,13 @@ private:
         friend class ptt;
     };
 
+public:
+    static QHBoxLayout hlayout;
+
 private:
 
     AMI* m_ami; // reference to the AMI , I`ll talk with this //
-    AmiAction m_act;
+    AmiAction* m_act;
 
     /* test specific never met in RADIS2 */
     static ptt*        m_self;

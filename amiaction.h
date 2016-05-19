@@ -4,15 +4,17 @@
 #include "amimsg.h"
 
 class AmiMsg;
+class ptt;
 
 class AmiAction
 {
 public:
-    explicit AmiAction(); // maybe construct the AmiMsg //
+    explicit AmiAction(ptt* cl); // maybe construct the AmiMsg //
     virtual ~AmiAction(); // maybe destroy it //
 
     QByteArray getMsg();
 private:
+    void*   m_callee;
     AmiMsg m_msg;
 
 };

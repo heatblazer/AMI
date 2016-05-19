@@ -14,31 +14,28 @@ class AMI : public QObject
         AMI_READY,
         AMI_NOT_READY,
         AMI_LOGIN_OK,
-        AMI_LOGIN_ERR,
-        UNKNOWN
+        AMI_LOGIN_FAILED,
+        UNKNOWN // кандидат за премахване //
     };
 
 
 public:
     explicit AMI(QObject* parent = nullptr);
     virtual ~AMI();
-    void init(void);
+    void init(int *pResult);
     void action(const QString& act);
 
 
 private:
+    //! ясно е, че е логин
+    //! \brief login
+    //! \param username
+    //! \param password
+    //!
     void login(const QString &uname, const QString &pass);
 
     // I`ll emit these so the client will know I am ready
 signals:
-    void loginSuccess();
-    void loginError();
-
-    void amiConnected();
-    void amiDisconnected();
-
-    void actionReady();
-    void actionNotReady();
 
     void amiStateChanged(AmiState state);
 
