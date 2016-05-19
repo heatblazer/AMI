@@ -31,7 +31,7 @@ ptt::ptt(QObject *parent) : QObject(parent)
     m_button->setMinimumHeight(200);
     m_button->setMinimumWidth(200);
 
-    m_self = this;
+    m_self = this; // this will point to the last one PTT4 in the case //
     m_act = new AmiAction(this);
     hlayout.addWidget(m_button);
 
@@ -66,9 +66,9 @@ ptt::phandle::phandle(QPushButton *bhndl)
 
 void ptt::phandle::run()
 {
-
+    // samo za ptt4 //
     while (ptt::m_self->m_button->isDown()) {
-       // std::cout << "HANDLE BUTTON DOWN" << std::endl;
+        std::cout << "HANDLE BUTTON DOWN" ;
        // ptt::m_self->doAction(&ptt::m_self->m_act);
     }
 }
@@ -81,9 +81,9 @@ void ptt::hReleased()
 
 void ptt::hPress()
 {
-    // don`t handle the hold button //
-    static phandle ph(m_button);
-    ph.start();
+    // I want to hacve one pressed signal capturer //
+    static phandle hndl(m_button);
+    hndl.start();
 }
 
 void ptt::doAction(AmiAction *action)
