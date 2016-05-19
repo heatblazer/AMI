@@ -11,7 +11,7 @@ ptt::ptt(QObject *parent) : QObject(parent)
     static char pttname[8]={0};
     // NOT MISRA !!!
     sprintf(pttname, "PTT%d", ++pttid);
-
+    m_name = QString(pttname);
 
     m_button = new QPushButton;
 
@@ -83,6 +83,7 @@ void ptt::hPress()
 
 void ptt::doAction(AmiAction *action)
 {
+    std::cout << "Callee: " << m_name.toStdString() << std::endl;
 
     // ami action will take an action using his msg ptr //
     if (m_ami != nullptr) {

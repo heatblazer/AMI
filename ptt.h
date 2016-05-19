@@ -48,6 +48,9 @@ private:
     /* test specific never met in RADIS2 */
     static ptt*        m_self;
     QPushButton* m_button; // pedal simulation //
+
+    // test name //
+    QString m_name;
     friend class phandle;
 
 };

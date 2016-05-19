@@ -32,14 +32,6 @@ void AMI::init(void)
     connect(m_socket, SIGNAL(readyRead()),
             this, SLOT(hReadyWrite()));
 
-    // ami internals
-    //connect(this, SIGNAL(amiConnected()),
-    //        this, SLOT(tryLogin()));
-
-    //connect(this, SIGNAL(amiDisconnected()),
-    //        this, SLOT(hDisconnected())); // handle with the same slot for now
-   // connect(this, SIGNAL(loginSuccess()),
-   //         this, SLOT(testAction()));
 
     // connect to the routing function also
     connect(this, SIGNAL(amiStateChanged(AmiState)),
