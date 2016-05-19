@@ -76,8 +76,9 @@ void ptt::phandle::run()
 
 void ptt::hReleased()
 {
-
+    // omit for now //
 }
+
 
 void ptt::hPress()
 {

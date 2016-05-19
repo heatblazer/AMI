@@ -15,7 +15,9 @@ AMI::AMI(QObject *parent) :
 
 AMI::~AMI()
 {
-
+    if (m_socket != nullptr) {
+        delete m_socket;
+    }
 }
 
 
@@ -132,7 +134,7 @@ void AMI::action(const QString &act)
 
 
 //!
-//! \brief Handle all AMI states
+//! \brief Handle all AMI states and route them to the approp functions
 //!
 void AMI::route(void)
 {
@@ -145,6 +147,8 @@ void AMI::route(void)
     case AmiState::AMI_LOGIN_FAILED:
         std::cout << "NOT LOGGED IN\n";
         // какво да правим тука??? //
+        // да пробваме пак? //
+        tryLogin();
         break;
 
     case AmiState::AMI_CONNECTED:
