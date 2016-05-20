@@ -64,12 +64,12 @@ ptt::phandle::phandle(QPushButton *bhndl)
     pBtn = bhndl;
 }
 
+
 void ptt::phandle::run()
 {
     // samo za ptt4 //
     while (ptt::m_self->m_button->isDown()) {
-        std::cout << "HANDLE BUTTON DOWN" ;
-       // ptt::m_self->doAction(&ptt::m_self->m_act);
+        ptt::m_self->doAction(ptt::m_self->m_act);
     }
 }
 

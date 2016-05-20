@@ -42,6 +42,7 @@ void AMI::init(int *pResult)
         *pResult = 0;
     }
 
+    // handle socket signals then route the AMI //
     connect(m_socket, SIGNAL(connected()),
             this, SLOT(hConnected()));
 
@@ -69,8 +70,8 @@ void AMI::testAction()
 
 void AMI::tryLogin()
 {
-   // login("goro", "sopa123"); // тествам грешен login //
-   login("joro", "sopa123");
+    login("goro", "sopa123"); // тествам грешен login //
+   //login("joro", "sopa123");
 }
 
 
