@@ -6,14 +6,14 @@
 #include <stdio.h> // for fprintf //
 
 
-AMI::AMI(QObject *parent) :
-    QObject(parent), m_state(AmiState::AMI_DISCONNECTED)
+Ami::Ami(QObject *parent) :
+    QObject(parent), m_state(AmiState::Ami_DISCONNECTED)
 {
 
 }
 
 
-AMI::~AMI()
+Ami::~Ami()
 {
     if (m_socket != nullptr) {
         delete m_socket;
@@ -22,12 +22,12 @@ AMI::~AMI()
 
 
 //!
-//! \brief AMI::init, initializes socket and connections between objects
+//! \brief Ami::init, initializes socket and connections between objects
 //! also, returns a value, and emits a signal
 //! \param pResult return of the created QTcpSocket (1-OK) (0-FAIL)
 //! NOTE :this is NOT FORBIDEN BY <C/C++ MISRA>
 //!
-void AMI::init(int *pResult)
+void Ami::init(int *pResult)
 {
     // I am interested IF m_socket was created, I don`t want asserts with    //
     // tryung to access not created socket                                   //
@@ -42,7 +42,7 @@ void AMI::init(int *pResult)
         *pResult = 0;
     }
 
-    // handle socket signals then route the AMI //
+    // handle socket signals then route the Ami //
     connect(m_socket, SIGNAL(connected()),
             this, SLOT(hConnected()));
 
@@ -56,125 +56,125 @@ void AMI::init(int *pResult)
             this, SLOT(hReadyWrite()));
 
     // connect to the routing function also
-    connect(this, SIGNAL(amiStateChanged(AmiState)),
+    connect(this, SIGNAL(AmiStateChanged(AmiState)),
             this, SLOT(route()));
 
     // jump to the routing function //
-    emit amiStateChanged(m_state);
+    emit AmiStateChanged(m_state);
 }
 
-void AMI::testAction()
+void Ami::testAction()
 {
     m_socket->write("Action: ListCommands\n\n");
 }
 
-void AMI::tryLogin()
+void Ami::tryLogin()
 {
     login("goro", "sopa123"); // тествам грешен login //
    //login("joro", "sopa123");
 }
 
 
-void AMI::hConnected()
+void Ami::hConnected()
 {
-    m_state = AmiState::AMI_CONNECTED;
-    emit amiStateChanged(m_state);
+    m_state = AmiState::Ami_CONNECTED;
+    emit AmiStateChanged(m_state);
 }
 
 
-void AMI::hDisconnected()
+void Ami::hDisconnected()
 {
-    m_state = AmiState::AMI_DISCONNECTED;
-    emit amiStateChanged(m_state);
+    m_state = AmiState::Ami_DISCONNECTED;
+    emit AmiStateChanged(m_state);
 }
 
 
-void AMI::hBytesWritten(qint64 bytes)
+void Ami::hBytesWritten(qint64 bytes)
 {
     std::cout  << "Bytes written: " << bytes;
     if(bytes > 0){
-        m_state = AmiState::AMI_READY;
+        m_state = AmiState::Ami_READY;
     } else {
-        m_state = AmiState::AMI_NOT_READY;
+        m_state = AmiState::Ami_NOT_READY;
     }
-    emit amiStateChanged(m_state);
+    emit AmiStateChanged(m_state);
 }
 
 // maybe emit or change state //
-void AMI::hReadyWrite()
+void Ami::hReadyWrite()
 {
     QString s;
-    m_state = AmiState::AMI_NOT_READY;
+    m_state = AmiState::Ami_NOT_READY;
     if (m_socket->canReadLine()) {
         // read all //
         // or if needed read line by line depends what do we need //
         s = QString(m_socket->readAll().simplified());
         printf("%s\n", s.toLocal8Bit().constData());
-        m_state = AmiState::AMI_READY;
+        m_state = AmiState::Ami_READY;
     }
-    // else ami is not ready //
+    // else Ami is not ready //
 
-    emit amiStateChanged(m_state);
+    emit AmiStateChanged(m_state);
 }
 
 //!
-//! \brief take ami action
+//! \brief take Ami action
 //! \param string or uri taking the action
 //!
-void AMI::action(const QString &act)
+void Ami::action(const QString &act)
 {
     qint64 bytes = m_socket->write(act.toLocal8Bit());
     if(bytes <= 0) {
-        m_state = AmiState::AMI_NOT_READY;
+        m_state = AmiState::Ami_NOT_READY;
     } else {
-        m_state = AmiState::AMI_READY;
+        m_state = AmiState::Ami_READY;
     }
 
-    emit amiStateChanged(m_state);
+    emit AmiStateChanged(m_state);
 }
 
 
 //!
-//! \brief Handle all AMI states and route them to the approp functions
+//! \brief Handle all Ami states and route them to the approp functions
 //!
-void AMI::route(void)
+void Ami::route(void)
 {
     switch (m_state)
     {
-    case AmiState::AMI_LOGIN_OK:
+    case AmiState::Ami_LOGIN_OK:
         std::cout << "LOGGED IN\n";
         break;
 
-    case AmiState::AMI_LOGIN_FAILED:
+    case AmiState::Ami_LOGIN_FAILED:
         std::cout << "NOT LOGGED IN\n";
         // какво да правим тука??? //
         // да пробваме пак? //
         tryLogin();
         break;
 
-    case AmiState::AMI_CONNECTED:
-        std::cout << "AMI CONNECTED\n";
+    case AmiState::Ami_CONNECTED:
+        std::cout << "Ami CONNECTED\n";
         // try login
         tryLogin();
         break;
 
-    case AmiState::AMI_CONNECTION_LOST:
-        std::cout << "AMI CONNECTION LOST\n";
+    case AmiState::Ami_CONNECTION_LOST:
+        std::cout << "Ami CONNECTION LOST\n";
         // try to reconnect //
         m_socket->connectToHost("192.168.32.89", 5038);
         break;
 
-    case AmiState::AMI_READY:
-        std::cout << "AMI READY\n";
+    case AmiState::Ami_READY:
+        std::cout << "Ami READY\n";
         // ready to send actions
         break;
 
-    case AmiState::AMI_NOT_READY:
-        std::cout << "AMI NOT READY\n";
+    case AmiState::Ami_NOT_READY:
+        std::cout << "Ami NOT READY\n";
         break;
 
-    case AmiState::AMI_DISCONNECTED:
-        std::cout << "AMI DISCONNECTED\n";
+    case AmiState::Ami_DISCONNECTED:
+        std::cout << "Ami DISCONNECTED\n";
         // try to connect  //
     default:
         m_socket->connectToHost("192.168.32.89", 5038);
@@ -183,7 +183,7 @@ void AMI::route(void)
 }
 
 
-void AMI::login(const QString& uname, const QString& pass)
+void Ami::login(const QString& uname, const QString& pass)
 {
     QString login_str = QString("Action: Login\nUsername: %1\nSecret: %2\n\n")
             .arg(uname).arg(pass);
@@ -192,12 +192,12 @@ void AMI::login(const QString& uname, const QString& pass)
     // I can`t be logged with -1 or less bytes than requested to be written //
     if ((res < 0) || (res < login_str.length())) {
         // the command will be error
-        m_state = AmiState::AMI_LOGIN_FAILED;
+        m_state = AmiState::Ami_LOGIN_FAILED;
     } else {
-        m_state = AmiState::AMI_LOGIN_OK;
+        m_state = AmiState::Ami_LOGIN_OK;
     }
 
-    emit amiStateChanged(m_state);
+    emit AmiStateChanged(m_state);
 }
 
 

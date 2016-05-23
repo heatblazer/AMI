@@ -1,5 +1,5 @@
-#ifndef AMIACTION_H
-#define AMIACTION_H
+#ifndef AmiACTION_H
+#define AmiACTION_H
 #include <QByteArray>
 #include "amimsg.h"
 
@@ -20,4 +20,4 @@ private:
 };
 
 
-#endif // AMIACTION_H
+#endif // AmiACTION_H

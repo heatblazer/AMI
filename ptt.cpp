@@ -38,10 +38,10 @@ ptt::ptt(QObject *parent) : QObject(parent)
 
 }
 
-void ptt::registerAmi(AMI* pami)
+void ptt::registerAmi(Ami* pAmi)
 {
-    if (pami != nullptr) {
-        m_ami = pami;
+    if (pAmi != nullptr) {
+        m_Ami = pAmi;
     }
 }
 
@@ -91,9 +91,9 @@ void ptt::doAction(AmiAction *action)
 {
     std::cout << "Callee: " << m_name.toStdString() << std::endl;
 
-    // ami action will take an action using his msg ptr //
-    if (m_ami != nullptr) {
-        m_ami->action(action->getMsg());
+    // Ami action will take an action using his msg ptr //
+    if (m_Ami != nullptr) {
+        m_Ami->action(action->getMsg());
     }
 }
 

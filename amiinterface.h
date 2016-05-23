@@ -1,5 +1,5 @@
-#ifndef AMIINTERFACE_H
-#define AMIINTERFACE_H
+#ifndef AmiINTERFACE_H
+#define AmiINTERFACE_H
 #include "amiaction.h"
 
 // I want you to implement it forcibly and never instante it //
@@ -14,4 +14,4 @@ public:
 };
 
 
-#endif // AMIINTERFACE_H
+#endif // AmiINTERFACE_H

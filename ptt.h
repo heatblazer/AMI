@@ -23,7 +23,7 @@ public:
     virtual ~ptt();
 
     virtual void doAction(AmiAction *action);
-    void registerAmi(AMI* pami);    //for now register an outside ami //
+    void registerAmi(Ami* pAmi);    //for now register an outside Ami //
 
 
 signals:
@@ -49,7 +49,7 @@ public:
 
 private:
 
-    AMI* m_ami; // reference to the AMI , I`ll talk with this //
+    Ami* m_Ami; // reference to the Ami , I`ll talk with this //
     AmiAction* m_act;
 
     /* test specific never met in RADIS2 */

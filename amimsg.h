@@ -1,5 +1,5 @@
-#ifndef AMIMSG_H
-#define AMIMSG_H
+#ifndef AmiMSG_H
+#define AmiMSG_H
 #include <QString>
 class AmiClient;
 
@@ -33,4 +33,4 @@ private:
 
 };
 
-#endif // AMIMSG_H
+#endif // AmiMSG_H

@@ -11,12 +11,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    // create an ami machine //
-    AMI ami;
+    // create an Ami machine //
+    Ami Ami;
 
     // initialize it //
     int res = 0;
-    ami.init(&res);
+    Ami.init(&res);
 
     if (res == 0) {
         exit(1);
@@ -29,11 +29,11 @@ int main(int argc, char *argv[])
     ptt p3;
     ptt p4;
 
-    // get a handle to the ami //
-    p1.registerAmi(&ami);
-    p2.registerAmi(&ami);
-    p3.registerAmi(&ami);
-    p4.registerAmi(&ami);
+    // get a handle to the Ami //
+    p1.registerAmi(&Ami);
+    p2.registerAmi(&Ami);
+    p3.registerAmi(&Ami);
+    p4.registerAmi(&Ami);
 
 
     QWidget mw;

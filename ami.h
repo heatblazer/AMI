@@ -1,27 +1,27 @@
-#ifndef AMI_H
-#define AMI_H
+#ifndef Ami_H
+#define Ami_H
 #include <QObject>
 class QTcpSocket;
 
-class AMI : public QObject
+class Ami : public QObject
 {
     Q_OBJECT
 
     enum AmiState {
-        AMI_CONNECTED,
-        AMI_DISCONNECTED,
-        AMI_CONNECTION_LOST,
-        AMI_READY,
-        AMI_NOT_READY,
-        AMI_LOGIN_OK,
-        AMI_LOGIN_FAILED,
+        Ami_CONNECTED,
+        Ami_DISCONNECTED,
+        Ami_CONNECTION_LOST,
+        Ami_READY,
+        Ami_NOT_READY,
+        Ami_LOGIN_OK,
+        Ami_LOGIN_FAILED,
         UNKNOWN // кандидат за премахване //
     };
 
 
 public:
-    explicit AMI(QObject* parent = nullptr);
-    virtual ~AMI();
+    explicit Ami(QObject* parent = nullptr);
+    virtual ~Ami();
     void init(int *pResult);
     void action(const QString& act);
 
@@ -37,7 +37,7 @@ private:
     // I`ll emit these so the client will know I am ready
 signals:
 
-    void amiStateChanged(AmiState state);
+    void AmiStateChanged(AmiState state);
 
 public slots:
     void hConnected();
@@ -59,4 +59,4 @@ private:
 
 };
 
-#endif // AMI_H
+#endif // Ami_H
