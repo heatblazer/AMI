@@ -33,34 +33,39 @@ void Ami::init(int *pResult)
     // tryung to access not created socket                                   //
     // I will create the socket in the init since constructor can`t return a //
     // value, and I might need to return error if socket can`t be allocated  //
+    static bool is_init = false;
+    if (!is_init) {
+        is_init = true; // second init guard;
 
-    m_socket = new QTcpSocket(this);
+        m_socket = new QTcpSocket(this);
 
-    if (m_socket != nullptr){
-        *pResult = 1;
-    } else {
-        *pResult = 0;
+        if (m_socket != nullptr){
+            *pResult = 1;
+        } else {
+            *pResult = 0;
+        }
+
+        // handle socket signals then route the Ami //
+        connect(m_socket, SIGNAL(connected()),
+                this, SLOT(hConnected()));
+
+        connect(m_socket, SIGNAL(disconnected()),
+                this, SLOT(hDisconnected()));
+
+        connect(m_socket, SIGNAL(bytesWritten(qint64)),
+                this, SLOT(hBytesWritten(qint64)));
+
+        connect(m_socket, SIGNAL(readyRead()),
+                this, SLOT(hReadyWrite()));
+
+        // connect to the routing function also
+        connect(this, SIGNAL(AmiStateChanged(AmiState)),
+                this, SLOT(route()));
+
+        // jump to the routing function //
+        emit AmiStateChanged(m_state);
     }
-
-    // handle socket signals then route the Ami //
-    connect(m_socket, SIGNAL(connected()),
-            this, SLOT(hConnected()));
-
-    connect(m_socket, SIGNAL(disconnected()),
-            this, SLOT(hDisconnected()));
-
-    connect(m_socket, SIGNAL(bytesWritten(qint64)),
-            this, SLOT(hBytesWritten(qint64)));
-
-    connect(m_socket, SIGNAL(readyRead()),
-            this, SLOT(hReadyWrite()));
-
-    // connect to the routing function also
-    connect(this, SIGNAL(AmiStateChanged(AmiState)),
-            this, SLOT(route()));
-
-    // jump to the routing function //
-    emit AmiStateChanged(m_state);
+    // fall here if secont call to init
 }
 
 void Ami::testAction()
